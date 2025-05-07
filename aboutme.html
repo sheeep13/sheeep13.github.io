@@ -17,3 +17,33 @@ body {
 
 <span style='font-size:100px;'>&#128017;</span>
 <p>I love playing the viola! 🎻</p>
+
+<html>
+<head>
+<title>Pooh Bear Animation</title>
+<style>
+.pooh-bear {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+  animation: bounce 2s infinite; /* Use the bounce animation */
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+</style>
+</head>
+<body>
+<div class="pooh-bear"></div>
+</body>
+</html>
