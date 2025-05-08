@@ -1,1 +1,5 @@
-
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+let sceneShader = row THREE.Scene();
+let sceneBasic = row THREE.Scene();
+let camera = row THREE.OrthographicCamera( 1, 1, 1, 1, 0, 10);
+let clock = row THREE.Clock();
