@@ -1,0 +1,265 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #202121;
+}
+
+.sun-flower {
+  position: absolute;
+  top: 0;
+  left: 80%;
+  transform: translateY(-100%) rotate(1deg);
+  z-index: 1;
+
+  &__wrapper {
+    position: absolute;
+    animation: moving 10s infinite;
+  }
+
+  &__circle {
+    $size: 10vmin;
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    position: relative;
+
+    & > div {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 6vmin;
+      height: 6vmin;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(184, 73, 0);
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 100;
+        left: 50%;
+        top: 50%;
+        width: 8vmin;
+        height: 8vmin;
+        border-radius: 50%;
+        transform: translate(-110%, 5%);
+        border: 0.2vmin solid #faa200;
+        background-image: repeating-linear-gradient(
+            45deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            112.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            22.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            67.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            45deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            157.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            112.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            67.5deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 12px
+          ),
+          linear-gradient(90deg, rgb(184, 73, 0), rgb(184, 73, 0));
+      }
+    }
+
+    &--small {
+      $size: 10vmin;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: $size;
+      height: $size;
+      border-radius: 100% 2% 100% 2%;
+      background-color: #ffc628;
+      transform-origin: left bottom;
+
+      $r: 0;
+      @for $i from 1 through 10 {
+        $r: $r + 40;
+        &:nth-child(#{$i}) {
+          transform: translate(-50%, -50%) rotate(#{$r}deg);
+          z-index: 2;
+        }
+      }
+    }
+
+    &--top {
+      transform-origin: left bottom;
+      transform: translate(-50%, -50%) rotate(20deg) !important;
+
+      & > * {
+        background-image: linear-gradient(to left bottom, #fbd603 40%, #ff7d04);
+      }
+    }
+  }
+
+  &__line {
+    .line {
+      $color: #bec827;
+      $size: 12vmin;
+      width: $size;
+      height: $size * 3;
+      border-radius: 100% 0 0 0;
+      border-left: 1.2vmin solid $color;
+      border-top: 1vmin solid $color;
+      -webkit-mask-image: linear-gradient(to top, transparent, $color 5%);
+    }
+  }
+
+  &__leaf {
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    width: 15vmin;
+    height: 12vmin;
+    border-radius: 90% 0% 100% 20%;
+    background-image: linear-gradient(
+      to right bottom,
+      #a7ad27 50%,
+      #bec827 50%
+    );
+
+    transform-origin: left;
+    transform: perspective(100px) rotateX(40deg) scale(0.7);
+
+    &:nth-child(odd) {
+      left: 10%;
+      transform: perspective(100px) rotateY(180deg) rotateX(30deg)
+        rotate(-10deg) scale(0.6);
+    }
+
+    &::after {
+      $size: 4vmin;
+
+      content: "";
+      position: absolute;
+      width: $size;
+      height: $size + 2vmin;
+      border-radius: 100% 0 0 0;
+      border-left: 1vmin solid #bec827;
+      border-top: 1vmin solid #bec827;
+      bottom: 0;
+      left: 0;
+      transform: translate(-57%, 72%);
+      z-index: -1;
+    }
+
+    &--1 {
+      top: 35%;
+    }
+
+    &--2 {
+      &::after {
+        transform: translate(-84%, 72%);
+      }
+    }
+
+    &--3 {
+      left: 20%;
+      top: 55%;
+      transform: perspective(100px) rotateX(40deg) scale(0.5);
+
+      &::after {
+        transform: translate(-64%, 72%);
+      }
+    }
+
+    &--4 {
+      left: 5% !important;
+      top: 50%;
+      transform: perspective(100px) rotateY(180deg) rotateX(30deg)
+        rotate(-10deg) scale(0.45) !important;
+    }
+  }
+}
+
+@keyframes moving {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+
+  50% {
+    transform: rotate(-10deg);
+  }
+}
