@@ -22,266 +22,73 @@ body {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ping Pong Game</title>
+  <title>Interactive SVG Flower</title>
   <style>
-    body { background: #222; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    #pongCanvas { background: #000; display: block; margin: auto; border: 3px solid #fff; }
-    h1 { color: #fff; font-family: sans-serif; text-align: center; }
+    body {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #f0f8ff;
+    }
+    .petal {
+      cursor: pointer;
+      transition: transform 0.2s, fill 0.2s;
+    }
+    .petal:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px #ffb6c1);
+    }
+    .center {
+      cursor: pointer;
+      transition: fill 0.2s;
+    }
+    .center:hover {
+      fill: #ffd700;
+    }
   </style>
 </head>
 <body>
-  <canvas id="pongCanvas" width="600" height="400"></canvas>
+  <svg id="flower" width="300" height="300" viewBox="0 0 300 300">
+    <!-- 6 petals -->
+    <g id="petals">
+      <ellipse class="petal" cx="150" cy="70" rx="30" ry="60" fill="#ff69b4" data-index="0"/>
+      <ellipse class="petal" cx="230" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="1" transform="rotate(60 150 150)"/>
+      <ellipse class="petal" cx="230" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="2" transform="rotate(120 150 150)"/>
+      <ellipse class="petal" cx="150" cy="230" rx="30" ry="60" fill="#ff69b4" data-index="3" transform="rotate(180 150 150)"/>
+      <ellipse class="petal" cx="70" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="4" transform="rotate(240 150 150)"/>
+      <ellipse class="petal" cx="70" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="5" transform="rotate(300 150 150)"/>
+    </g>
+    <!-- Center -->
+    <circle class="center" cx="150" cy="150" r="40" fill="#ffeb3b" stroke="#fbc02d" stroke-width="5"/>
+  </svg>
   <script>
-    const canvas = document.getElementById('pongCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Paddle settings
-    const paddleWidth = 10, paddleHeight = 80;
-    let leftPaddleY = (canvas.height - paddleHeight) / 2;
-    let rightPaddleY = (canvas.height - paddleHeight) / 2;
-    const paddleSpeed = 5;
-
-    // Ball settings
-    let ballX = canvas.width / 2, ballY = canvas.height / 2;
-    let ballRadius = 8;
-    let ballSpeedX = 4, ballSpeedY = 4;
-
-    // Controls
-    let upPressed = false, downPressed = false;
-
-    // Score
-    let leftScore = 0, rightScore = 0;
-
-    // Draw everything
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw net
-      ctx.setLineDash([5, 5]);
-      ctx.beginPath();
-      ctx.moveTo(canvas.width/2, 0);
-      ctx.lineTo(canvas.width/2, canvas.height);
-      ctx.strokeStyle = '#fff';
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Draw paddles
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
-      ctx.fillRect(canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight);
-
-      // Draw ball
-      ctx.beginPath();
-      ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
-      ctx.fill();
-
-      // Draw score
-      ctx.font = "32px Arial";
-      ctx.fillText(leftScore, canvas.width/4, 40);
-      ctx.fillText(rightScore, 3*canvas.width/4, 40);
-    }
-
-    // Move paddles
-    function movePaddles() {
-      if (upPressed && rightPaddleY > 0) rightPaddleY -= paddleSpeed;
-      if (downPressed && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += paddleSpeed;
-
-      // Simple AI for left paddle
-      if (ballY < leftPaddleY + paddleHeight/2 && leftPaddleY > 0) leftPaddleY -= paddleSpeed * 0.75;
-      if (ballY > leftPaddleY + paddleHeight/2 && leftPaddleY < canvas.height - paddleHeight) leftPaddleY += paddleSpeed * 0.75;
-    }
-
-    // Move ball
-    function moveBall() {
-      ballX += ballSpeedX;
-      ballY += ballSpeedY;
-
-      // Top and bottom collision
-      if (ballY < ballRadius || ballY > canvas.height - ballRadius) {
-        ballSpeedY = -ballSpeedY;
-      }
-
-      // Left paddle collision
-      if (ballX - ballRadius < paddleWidth && ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
-        ballSpeedX = -ballSpeedX;
-        ballX = paddleWidth + ballRadius; // Prevent sticking
-      }
-      // Right paddle collision
-      if (ballX + ballRadius > canvas.width - paddleWidth && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
-        ballSpeedX = -ballSpeedX;
-        ballX = canvas.width - paddleWidth - ballRadius; // Prevent sticking
-      }
-
-      // Score
-      if (ballX < 0) {
-        rightScore++;
-        resetBall();
-      }
-      if (ballX > canvas.width) {
-        leftScore++;
-        resetBall();
-      }
-    }
-
-    function resetBall() {
-      ballX = canvas.width / 2;
-      ballY = canvas.height / 2;
-      ballSpeedX = (Math.random() > 0.5 ? 4 : -4);
-      ballSpeedY = (Math.random() > 0.5 ? 4 : -4);
-    }
-
-    function gameLoop() {
-      movePaddles();
-      moveBall();
-      draw();
-      requestAnimationFrame(gameLoop);
-    }
-
-    // Controls
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp') upPressed = true;
-      if (e.key === 'ArrowDown') downPressed = true;
-    });
-    document.addEventListener('keyup', (e) => {
-      if (e.key === 'ArrowUp') upPressed = false;
-      if (e.key === 'ArrowDown') downPressed = false;
+    // Colors for petals on click
+    const colors = ['#ff69b4', '#b266ff', '#4fc3f7', '#81c784', '#ffd54f', '#ff8a65'];
+    const petals = document.querySelectorAll('.petal');
+    petals.forEach((petal, i) => {
+      petal.addEventListener('click', function() {
+        // Change color to next in the array
+        const current = colors.indexOf(this.getAttribute('fill'));
+        const next = (current + 1) % colors.length;
+        this.setAttribute('fill', colors[next]);
+      });
     });
 
-    // Start game
-    gameLoop();
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Ping Pong Game</title>
-  <style>
-    body { background: #222; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    #pongCanvas { background: #000; display: block; margin: auto; border: 3px solid #fff; }
-    h1 { color: #fff; font-family: sans-serif; text-align: center; }
-  </style>
-</head>
-<body>
-  <canvas id="pongCanvas" width="600" height="400"></canvas>
-  <script>
-    const canvas = document.getElementById('pongCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Paddle settings
-    const paddleWidth = 10, paddleHeight = 80;
-    let leftPaddleY = (canvas.height - paddleHeight) / 2;
-    let rightPaddleY = (canvas.height - paddleHeight) / 2;
-    const paddleSpeed = 5;
-
-    // Ball settings
-    let ballX = canvas.width / 2, ballY = canvas.height / 2;
-    let ballRadius = 8;
-    let ballSpeedX = 4, ballSpeedY = 4;
-
-    // Controls
-    let upPressed = false, downPressed = false;
-
-    // Score
-    let leftScore = 0, rightScore = 0;
-
-    // Draw everything
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw net
-      ctx.setLineDash([5, 5]);
-      ctx.beginPath();
-      ctx.moveTo(canvas.width/2, 0);
-      ctx.lineTo(canvas.width/2, canvas.height);
-      ctx.strokeStyle = '#fff';
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Draw paddles
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, leftPaddleY, paddleWidth, paddleHeight);
-      ctx.fillRect(canvas.width - paddleWidth, rightPaddleY, paddleWidth, paddleHeight);
-
-      // Draw ball
-      ctx.beginPath();
-      ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
-      ctx.fill();
-
-      // Draw score
-      ctx.font = "32px Arial";
-      ctx.fillText(leftScore, canvas.width/4, 40);
-      ctx.fillText(rightScore, 3*canvas.width/4, 40);
-    }
-
-    // Move paddles
-    function movePaddles() {
-      if (upPressed && rightPaddleY > 0) rightPaddleY -= paddleSpeed;
-      if (downPressed && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += paddleSpeed;
-
-      // Simple AI for left paddle
-      if (ballY < leftPaddleY + paddleHeight/2 && leftPaddleY > 0) leftPaddleY -= paddleSpeed * 0.75;
-      if (ballY > leftPaddleY + paddleHeight/2 && leftPaddleY < canvas.height - paddleHeight) leftPaddleY += paddleSpeed * 0.75;
-    }
-
-    // Move ball
-    function moveBall() {
-      ballX += ballSpeedX;
-      ballY += ballSpeedY;
-
-      // Top and bottom collision
-      if (ballY < ballRadius || ballY > canvas.height - ballRadius) {
-        ballSpeedY = -ballSpeedY;
-      }
-
-      // Left paddle collision
-      if (ballX - ballRadius < paddleWidth && ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
-        ballSpeedX = -ballSpeedX;
-        ballX = paddleWidth + ballRadius; // Prevent sticking
-      }
-      // Right paddle collision
-      if (ballX + ballRadius > canvas.width - paddleWidth && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
-        ballSpeedX = -ballSpeedX;
-        ballX = canvas.width - paddleWidth - ballRadius; // Prevent sticking
-      }
-
-      // Score
-      if (ballX < 0) {
-        rightScore++;
-        resetBall();
-      }
-      if (ballX > canvas.width) {
-        leftScore++;
-        resetBall();
-      }
-    }
-
-    function resetBall() {
-      ballX = canvas.width / 2;
-      ballY = canvas.height / 2;
-      ballSpeedX = (Math.random() > 0.5 ? 4 : -4);
-      ballSpeedY = (Math.random() > 0.5 ? 4 : -4);
-    }
-
-    function gameLoop() {
-      movePaddles();
-      moveBall();
-      draw();
-      requestAnimationFrame(gameLoop);
-    }
-
-    // Controls
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp') upPressed = true;
-      if (e.key === 'ArrowDown') downPressed = true;
+    // Center interaction - animate petals
+    const center = document.querySelector('.center');
+    center.addEventListener('click', () => {
+      petals.forEach((petal, i) => {
+        petal.animate([
+          { transform: 'scale(1)' },
+          { transform: 'scale(1.2)' },
+          { transform: 'scale(1)' }
+        ], {
+          duration: 400,
+          delay: i * 60
+        });
+      });
     });
-    document.addEventListener('keyup', (e) => {
-      if (e.key === 'ArrowUp') upPressed = false;
-      if (e.key === 'ArrowDown') downPressed = false;
-    });
-
-    // Start game
-    gameLoop();
   </script>
 </body>
 </html>
