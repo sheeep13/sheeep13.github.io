@@ -9,5 +9,42 @@ body { background-color: #lilac; }
 <!doctype html>
 <html>
     <head>
+    box-shadow: -2px -2px 20px rgba(255,255,255,0.5) inset;
+    
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+    
+    
+    &:hover {
+      opacity: 0.0;
+    }
+  }*/
+  
+
+    
+  @for $i from 1 through $np {
+    &:nth-child(#{$i}) {
+      animation: ani#{$i} $anim-time ease-in-out infinite;
+      animation-delay: ($i - 1) * $anim-time / $np;
+      @include transformation(
+        ($h - $ph) / 2 + $off * sin(($i - 1) * $angle-incr),
+        ($w - $pw) / 2 + $off * cos(($i - 1) * $angle-incr),
+        -$alpha + ($i - 1) * $angle-incr,
+        $alpha,
+        1
+      );
+    }
+  }
+}
+
+
+@for $i from 1 through $np {
+  @keyframes ani#{$i} {
+    0% {
+      @include transformation(
+        ($h - $ph) / 2 + $off * sin(($i - 1) * $angle-incr),
+        ($w - $pw) / 2 + $off * cos(($i - 1) * $angle-incr),
+        -$alpha + ($i - 1) * $angle-incr,
+        $alpha,
 
        
