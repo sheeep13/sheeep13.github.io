@@ -136,16 +136,128 @@ body {
     });
   </script>
 </body>
-</html><div class="container">
-<div class="droplet" id="no1"></div>
-<div class="droplet" id="no2"></div>
-<div class="droplet" id="no3"></div>
-<div class="droplet" id="no4"></div>
-<div class="droplet" id="no5"></div>
-<div class="droplet" id="no6"></div>
-<div class="droplet" id="no7"></div>
-<div class="droplet" id="no8"></div>
-<div class="droplet" id="no9"></div>
-<div class="droplet" id="no10"></div>
-  
-</div>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animated Moving Flower</title>
+  <style>
+    body {
+      background: #e3f7ff;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .flower {
+      position: relative;
+      width: 120px;
+      margin: 80px auto;
+      height: 220px;
+      animation: sway 3s infinite ease-in-out alternate;
+      /* The flower will gently sway left/right */
+      transform-origin: bottom center;
+    }
+    @keyframes sway {
+      0%   { transform: rotate(-7deg); }
+      50%  { transform: rotate(5deg); }
+      100% { transform: rotate(-7deg); }
+    }
+    .flower__glass {
+      width: 22px;
+      height: 60px;
+      background: #cbe6ee;
+      position: absolute;
+      bottom: 0;
+      left: 49px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 0 4px #79b9d6;
+    }
+    .f-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 170px;
+    }
+    .flower__line {
+      position: absolute;
+      left: 59px;
+      top: 50px;
+      width: 2px;
+      height: 120px;
+      background: #3a7721;
+      z-index: 1;
+      /* Animate the stem with a slight curve for realism */
+      border-radius: 10px 10px 40px 40px;
+    }
+    .f {
+      position: absolute;
+      top: 0;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+    }
+    .flower__leaf {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      background: #ffeb3b;
+      border-radius: 50% 50% 0 0;
+      transform-origin: 50% 100%;
+      opacity: 0.9;
+      animation: petal-move 2.5s ease-in-out infinite alternate;
+    }
+    .flower__leaf--1 { transform: rotate(0deg) translateY(-14px); animation-delay: 0s; }
+    .flower__leaf--2 { transform: rotate(45deg) translateY(-14px); background: #ffe082; animation-delay: 0.1s; }
+    .flower__leaf--3 { transform: rotate(90deg) translateY(-14px); background: #ffd54f; animation-delay: 0.2s; }
+    .flower__leaf--4 { transform: rotate(135deg) translateY(-14px); background: #ffb300; animation-delay: 0.3s; }
+    .flower__leaf--5 { transform: rotate(180deg) translateY(-14px); background: #ffeb3b; animation-delay: 0.4s; }
+    .flower__leaf--6 { transform: rotate(225deg) translateY(-14px); background: #ffe082; animation-delay: 0.5s; }
+    .flower__leaf--7 { transform: rotate(270deg) translateY(-14px); background: #ffd54f; animation-delay: 0.6s; }
+    .flower__leaf--8 { transform: rotate(315deg) translateY(-14px); background: #ffb300; animation-delay: 0.7s; }
+    @keyframes petal-move {
+      0% { transform: scaleY(1) rotate(var(--angle,0)) translateY(-14px); }
+      50% { transform: scaleY(1.1) rotate(var(--angle,0)) translateY(-18px); }
+      100% { transform: scaleY(1) rotate(var(--angle,0)) translateY(-14px); }
+    }
+    .flower__center {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      width: 36px;
+      height: 36px;
+      background: #ffc107;
+      border-radius: 50%;
+      z-index: 3;
+      box-shadow: 0 0 10px #ffe082;
+      animation: center-move 3s ease-in-out infinite alternate;
+    }
+    @keyframes center-move {
+      0%   { transform: scale(1) }
+      50%  { transform: scale(1.07) }
+      100% { transform: scale(1) }
+    }
+  </style>
+</head>
+<body>
+  <div class="flower">
+    <div class="f-wrapper">
+      <div class="flower__line"></div>
+      <div class="f">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+        <div class="flower__leaf flower__leaf--5"></div>
+        <div class="flower__leaf flower__leaf--6"></div>
+        <div class="flower__leaf flower__leaf--7"></div>
+        <div class="flower__leaf flower__leaf--8"></div>
+        <div class="flower__center"></div>
+      </div>
+    </div>
+    <div class="flower__glass"></div>
+  </div>
+</body>
+</html>
+
