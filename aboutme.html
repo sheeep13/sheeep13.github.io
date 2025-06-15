@@ -136,101 +136,16 @@ body {
     });
   </script>
 </body>
-</html>
-body {
-  background-color:black;
-}
-.container {
-  height: 100px;
-  width: 100px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-
-.droplet {
-  border-radius: 5px 90%;
-  border-style: solid;
-  border-width: 5px;
-  border-color: black;
-  height: 100px;
-  margin: auto;
-  width: 100px;
-  position: absolute;
-  top: 50px;
-  left: 50px;
-  /* top: 50%;
-    right: 50%;*/
-  transform-origin: left top;
-  opacity: 0;
-}
-
-#no1 {
-  background: purple;
-  animation: spin 5s ease-out infinite;
-  animation-fill-mode: forwards;
-  animation-delay: 0s;
-
-Navigation Menu
-Copilot
-
-Copilot navigation
-Copilot Chat
-Creating an interactive rainbow with CSS
-You said: How to make something cool with css
-How to make something cool with css and html
-Error
-I'm sorry but there was an error. Please try again.
-You said: How to make a interactive rainbow
-How to make a interactive rainbow
-Copilot said: To make an interactive rainbow, you can
-To make an interactive rainbow, you can use a variety of technologies depending on your target platform (web, mobile, desktop). The most common and accessible way is to use web technologies (HTML, CSS, JavaScript) to create an interactive rainbow that responds to user actions (like mouse movement or clicks).
-
-Here’s a simple example (web-based) using HTML, CSS, and JavaScript:
-
-HTML
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Interactive Rainbow</title>
-  <style>
-    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #222; }
-    canvas { border: 2px solid #333; background: #fff; }
-  </style>
-</head>
-<body>
-  <canvas id="rainbow" width="600" height="400"></canvas>
-  <script>
-    const canvas = document.getElementById('rainbow');
-    const ctx = canvas.getContext('2d');
-    const colors = ['#FF0000','#FF7F00','#FFFF00','#00FF00','#0000FF','#4B0082','#8F00FF'];
-
-    function drawRainbow(centerY) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let radius = 150;
-      for (let i = 0; i < colors.length; i++) {
-        ctx.beginPath();
-        ctx.arc(canvas.width/2, centerY, radius - i*15, Math.PI, 2*Math.PI, false);
-        ctx.lineWidth = 15;
-        ctx.strokeStyle = colors[i];
-        ctx.stroke();
-      }
-    }
-
-    // Initial draw
-    drawRainbow(canvas.height / 2);
-
-    // Interactivity: Move the rainbow up/down as you move the mouse
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const y = e.clientY - rect.top;
-      drawRainbow(y);
-    });
-  </script>
-</body>
-</html
-
+</html><div class="container">
+<div class="droplet" id="no1"></div>
+<div class="droplet" id="no2"></div>
+<div class="droplet" id="no3"></div>
+<div class="droplet" id="no4"></div>
+<div class="droplet" id="no5"></div>
+<div class="droplet" id="no6"></div>
+<div class="droplet" id="no7"></div>
+<div class="droplet" id="no8"></div>
+<div class="droplet" id="no9"></div>
+<div class="droplet" id="no10"></div>
+  
+</div>
