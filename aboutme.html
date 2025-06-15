@@ -137,4 +137,110 @@ body {
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About Me</title>
+    <style>
+      body {
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #f0f8ff;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .flower-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+        margin-top: 40px;
+      }
+      .petal {
+        cursor: pointer;
+        transition: transform 0.2s, fill 0.2s;
+      }
+      .petal:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 10px #ffb6c1);
+      }
+      .center {
+        cursor: pointer;
+        transition: fill 0.2s;
+      }
+      .center:hover {
+        fill: #ffd700;
+      }
+    </style>
+  </head>
+  <body>
+    <span style="font-size:100px;">&#128017;</span>
+    <p>I love playing the viola! 🎻</p>
 
+    <div class="flower-container">
+      <svg id="flower" width="300" height="300" viewBox="0 0 300 300">
+        <g id="sway-group">
+          <!-- 6 petals -->
+          <g id="petals">
+            <ellipse class="petal" cx="150" cy="70" rx="30" ry="60" fill="#ff69b4" data-index="0"/>
+            <ellipse class="petal" cx="230" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="1" transform="rotate(60 150 150)"/>
+            <ellipse class="petal" cx="230" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="2" transform="rotate(120 150 150)"/>
+            <ellipse class="petal" cx="150" cy="230" rx="30" ry="60" fill="#ff69b4" data-index="3" transform="rotate(180 150 150)"/>
+            <ellipse class="petal" cx="70" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="4" transform="rotate(240 150 150)"/>
+            <ellipse class="petal" cx="70" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="5" transform="rotate(300 150 150)"/>
+          </g>
+          <!-- Center -->
+          <circle class="center" cx="150" cy="150" r="40" fill="#ffeb3b" stroke="#fbc02d" stroke-width="5"/>
+          <!-- Stem -->
+          <rect x="142" y="250" width="16" height="60" rx="8" fill="#81c784"/>
+        </g>
+      </svg>
+    </div>
+
+    <script>
+      // Colors for petals on click
+      const colors = ['#ff69b4', '#b266ff', '#4fc3f7', '#81c784', '#ffd54f', '#ff8a65'];
+      const petals = document.querySelectorAll('.petal');
+      petals.forEach((petal, i) => {
+        petal.addEventListener('click', function() {
+          // Change color to next in the array
+          const current = colors.indexOf(this.getAttribute('fill'));
+          const next = (current + 1) % colors.length;
+          this.setAttribute('fill', colors[next]);
+        });
+      });
+
+      // Center interaction - animate petals
+      const center = document.querySelector('.center');
+      center.addEventListener('click', () => {
+        petals.forEach((petal, i) => {
+          petal.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.2)' },
+            { transform: 'scale(1)' }
+          ], {
+            duration: 400,
+            delay: i * 60
+          });
+        });
+      });
+
+      // Sway animation
+      const swayGroup = document.getElementById('sway-group');
+      let start = null;
+      function swayFlower(timestamp) {
+        if (!start) start = timestamp;
+        const progress = (timestamp - start) / 1000;
+        const sway = Math.sin(progress * 2) * 12; // Sway angle in degrees
+        swayGroup.setAttribute('transform', `rotate(${sway} 150 300)`); // Pivot at bottom center
+        requestAnimationFrame(swayFlower);
+      }
+      requestAnimationFrame(swayFlower);
+    </script>
+  </body>
+</html>
