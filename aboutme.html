@@ -137,3 +137,128 @@ body {
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <style>
+    body {
+      font-size: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f0f8ff;
+      min-height: 100vh;
+      margin: 0;
+      justify-content: center;
+    }
+    .petal {
+      cursor: pointer;
+      transition: transform 0.2s, fill 0.2s;
+    }
+    .petal:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px #ffb6c1);
+    }
+    .center {
+      cursor: pointer;
+      transition: fill 0.2s;
+    }
+    .center:hover {
+      fill: #ffd700;
+    }
+    .info {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    /* Modal styles */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #8886;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .close-btn {
+      margin-top: 20px;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 20px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .close-btn:hover {
+      background: #b266ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <span style="font-size:100px;">&#128017;</span>
+    <p>I love playing the viola! 🎻</p>
+    <p>Click the flower's yellow center for a surprise popup!</p>
+  </div>
+  <svg id="flower" width="300" height="300" viewBox="0 0 300 300">
+    <!-- 6 petals -->
+    <g id="petals">
+      <ellipse class="petal" cx="150" cy="70" rx="30" ry="60" fill="#ff69b4" data-index="0"/>
+      <ellipse class="petal" cx="230" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="1" transform="rotate(60 150 150)"/>
+      <ellipse class="petal" cx="230" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="2" transform="rotate(120 150 150)"/>
+      <ellipse class="petal" cx="150" cy="230" rx="30" ry="60" fill="#ff69b4" data-index="3" transform="rotate(180 150 150)"/>
+      <ellipse class="petal" cx="70" cy="190" rx="30" ry="60" fill="#ff69b4" data-index="4" transform="rotate(240 150 150)"/>
+      <ellipse class="petal" cx="70" cy="110" rx="30" ry="60" fill="#ff69b4" data-index="5" transform="rotate(300 150 150)"/>
+    </g>
+    <!-- Center -->
+    <circle class="center" cx="150" cy="150" r="40" fill="#ffeb3b" stroke="#fbc02d" stroke-width="5"/>
+  </svg>
+  <!-- Modal -->
+  <div class="modal-bg" id="modal">
+    <div class="modal-content">
+      <div>🌸 You clicked the flower's center! 🌸<br><br>Have a wonderful day!</div>
+      <button class="close-btn" id="closeModal">Close</button>
+    </div>
+  </div>
+  <script>
+    // Colors for petals on click
+    const colors = ['#ff69b4', '#b266ff', '#4fc3f7', '#81c784', '#ffd54f', '#ff8a65'];
+    const petals = document.querySelectorAll('.petal');
+    petals.forEach((petal) => {
+      petal.addEventListener('click', function() {
+        const current = colors.indexOf(this.getAttribute('fill'));
+        const next = (current + 1) % colors.length;
+        this.setAttribute('fill', colors[next]);
+      });
+    });
+
+    // Center interaction - show modal popup
+    const center = document.querySelector('.center');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    center.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+    // Optional: close modal when clicking outside content
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
